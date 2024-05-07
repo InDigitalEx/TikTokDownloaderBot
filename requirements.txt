@@ -3,8 +3,11 @@ asyncio
 aiogram
 
 # SQLAlchemy
-sqlalchemy
+SQLAlchemy
 
 # Pydantic
 pydantic
 pydantic-settings
+
+# HTTP requests
+aiohttp
