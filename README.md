@@ -1,2 +1,2 @@
-# TelegramBotTemplate
-Telegram bot project template using aiogram
+# TikTokDownloaderBot
+Bot for downloading videos from tiktok
