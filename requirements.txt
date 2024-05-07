@@ -1,0 +1,10 @@
+# Telegram
+asyncio
+aiogram
+
+# SQLAlchemy
+sqlalchemy
+
+# Pydantic
+pydantic
+pydantic-settings
