@@ -11,3 +11,6 @@ pydantic-settings
 
 # HTTP requests
 aiohttp
+
+# Beautiful Soup
+bs4

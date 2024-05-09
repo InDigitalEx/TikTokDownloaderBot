@@ -1,1 +1,2 @@
-from .main import TikTok
+from .content import ContentType
+from .tiktok import TikTok
