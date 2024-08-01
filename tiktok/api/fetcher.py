@@ -2,7 +2,7 @@ from aiohttp import ClientSession
 
 
 class Fetcher(object):
-    def __init__(self, link: str) -> None:
+    def __init__(self, link: str = None) -> None:
         self._basic_url = 'https://ssstik.io'
         self._url = '/abc?url=dl'
         self._data = f'id={link}&locale=en&tt=YXpMTE1l'
@@ -37,3 +37,7 @@ class Fetcher(object):
         async with ClientSession(self._basic_url) as session:
             async with session.post(self._url, data=self._data, headers=self._headers) as response:
                 return await response.text()
+
+    @property
+    def headers(self):
+        return self._headers

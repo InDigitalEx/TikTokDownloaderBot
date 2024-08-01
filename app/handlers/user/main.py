@@ -7,6 +7,7 @@ from aiogram.utils.media_group import MediaGroupBuilder
 
 from data import Messages
 from tiktok import TikTok, ContentType
+from tiktok.api import Fetcher
 from utils import split_array_into_groups
 
 user_router = Router()
@@ -28,6 +29,7 @@ async def __get_media_message(message: Message) -> None:
     try:
         await message.answer(Messages.MEDIA_FIND)
 
+        fetcher = Fetcher()
         tiktok = TikTok(message.text).get_content
         await tiktok.make_content()
 
@@ -39,7 +41,10 @@ async def __get_media_message(message: Message) -> None:
 
         if await tiktok.is_video:
             video = await tiktok.video
-            await message.answer_video(URLInputFile(video.media))
+            await message.answer_video(URLInputFile(
+                video.media,
+                headers=fetcher.headers
+            ))
 
         elif await tiktok.is_photos:
             photos = await tiktok.photos
@@ -48,7 +53,10 @@ async def __get_media_message(message: Message) -> None:
             for photos_group in photos_groups:
                 media_group = MediaGroupBuilder()
                 for photo in photos_group:
-                    media_group.add_photo(media=URLInputFile(photo))
+                    media_group.add_photo(media=URLInputFile(
+                        photo,
+                        headers=fetcher.headers
+                    ))
 
                 await message.answer_media_group(media=media_group.build())
             await message.answer(Messages.ALL_PHOTOS_SENT)
