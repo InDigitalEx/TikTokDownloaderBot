@@ -2,6 +2,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram import Router
+from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -9,13 +10,9 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from app.handlers import handlers_router
 from app.middlewares import register_main_middlewares
 from data import config
-from database.models import register_database_models
 
 
 async def __on_startup(router: Router) -> None:
-    # Register DB models
-    register_database_models()
-
     router.include_router(handlers_router)
     register_main_middlewares(router)
 
@@ -35,7 +32,7 @@ async def run_bot() -> None:
         bot: Bot = Bot(
             token=config.bot_token.get_secret_value(),
             session=session,
-            parse_mode=ParseMode.HTML
+            default=DefaultBotProperties(parse_mode=ParseMode.HTML)
         )
 
         dp = Dispatcher(storage=MemoryStorage())
